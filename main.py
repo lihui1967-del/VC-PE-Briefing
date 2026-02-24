@@ -9,37 +9,41 @@ from bs4 import BeautifulSoup
 # 配置区
 # ======================
 
-# 海外 RSS（你之前已验证 OK）
+# 海外 RSS（你已验证 OK）
 OVERSEAS_FEEDS = [
     "https://techcrunch.com/tag/funding/feed/",
     "https://www.fiercebiotech.com/rss/xml",
 ]
 
-# 中国 RSS：你图里验证 OK 的
+# 中国 RSS：你截图里 OK 的
 CHINA_RSS_FEEDS = [
     "https://36kr.com/feed",          # OK(30)
     "http://www.tmtpost.com/rss.xml", # OK(20)
     "https://cn.technode.com/feed/",  # OK(10)
 ]
 
-# 中国 HTML：用于“投融资专栏/行业投融资讯”抓取（不走 RSSHub）
+# 中国 HTML：投资界（你已 OK(63)）
 CHINA_HTML_SOURCES = [
-    # 36kr 投融资频道
-    {"name": "36kr-投融资", "url": "https://36kr.com/investment", "base": "https://36kr.com"},
-    # 投资界（PEdaily）- 资讯首页（含大量投融资/募资标题）
     {"name": "投资界-资讯", "url": "https://news.pedaily.cn/", "base": "https://news.pedaily.cn"},
 ]
 
-# B策略：标题含“融资”即算候选（但仍排噪音）
+# 噪音排除（出现就剔除）
 NOISE_WORDS = [
     "论坛", "峰会", "活动", "会议", "报告", "白皮书", "观点", "盘点", "预测", "招聘", "发布会", "圆桌", "直播",
-    "训练营", "课程", "研讨会"
+    "训练营", "课程", "研讨会", "沙龙", "榜单", "年会", "专访", "解读", "观察", "趋势", "方法论"
 ]
 
-# 基金/募资强信号（标题级）
+# 基金/募资信号（标题级）
 FUND_WORDS = ["募资", "募集", "首关", "终关", "设立", "成立", "备案", "基金", "GP", "LP", "FOF"]
 
-# 你关注赛道（用于分组；不命中=仍可收录，但放“其他/待归类”）
+# VC实战：融资动作词（宽松入池）
+DEAL_ACTION_WORDS = [
+    "获", "完成", "领投", "跟投", "加持",
+    "投资", "注资", "收购", "并购", "战略投资",
+    "增资", "入股", "出资", "融到", "融资"
+]
+
+# 你关注赛道（用于分组）
 SECTOR_RULES = {
     "AI": ["AI", "人工智能", "大模型", "LLM", "AIGC", "多模态", "算力", "机器人", "具身", "自动驾驶"],
     "医疗/生物": ["医疗", "医药", "生物", "器械", "IVD", "基因", "细胞", "抗体", "肿瘤", "诊断", "制药"],
@@ -48,8 +52,11 @@ SECTOR_RULES = {
     "消费": ["新消费", "品牌", "零售", "连锁", "餐饮", "咖啡", "美妆", "母婴", "潮玩", "宠物", "饮料", "食品"],
 }
 
-AMOUNT_RE = re.compile(r"((?:超|近|约)?\s*\d+(?:\.\d+)?\s*(?:亿|万)?\s*(?:人民币|元|美元|美金|US\$|USD|RMB)?)", re.I)
-
+# 金额提取（用于展示，不做硬过滤）
+AMOUNT_RE = re.compile(
+    r"((?:超|近|约)?\s*\d+(?:\.\d+)?\s*(?:亿|万|百万|千万|十亿)?\s*(?:人民币|元|美元|美金|US\$|USD|RMB)?)",
+    re.I
+)
 
 # ======================
 # 工具函数
@@ -77,14 +84,6 @@ def extract_amount(text: str) -> str:
 def is_noise(title: str) -> bool:
     return has_any(title, NOISE_WORDS)
 
-def is_true_deal_B(title: str) -> bool:
-    """B策略：标题包含“融资”就收（但排除噪音）"""
-    if not title:
-        return False
-    if is_noise(title):
-        return False
-    return "融资" in title
-
 def is_fund_news(title: str) -> bool:
     if not title:
         return False
@@ -92,7 +91,19 @@ def is_fund_news(title: str) -> bool:
         return False
     return has_any(title, FUND_WORDS)
 
-def fetch_rss(url: str, limit=50):
+def is_true_deal_vc(title: str) -> bool:
+    """
+    VC实战宽松入池：
+    - 排除明显噪音
+    - 只要包含“获/完成/领投/投资/加持/收购/并购/融资”等动作词，即认为是融资候选
+    """
+    if not title:
+        return False
+    if is_noise(title):
+        return False
+    return has_any(title, DEAL_ACTION_WORDS)
+
+def fetch_rss(url: str, limit=80):
     """RSS 直连抓取：返回 (items, status)"""
     try:
         r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
@@ -109,10 +120,8 @@ def fetch_rss(url: str, limit=50):
     except Exception as ex:
         return [], f"FAIL({type(ex).__name__}) {ex}"
 
-def fetch_html_links(name: str, url: str, base: str, limit=120):
-    """HTML 抓取公开页面的文章链接：返回 (links, status)
-       links: list[dict(title, link)]
-    """
+def fetch_html_links(name: str, url: str, base: str, limit=220):
+    """HTML 抓取公开页面文章链接：返回 (links, status)"""
     try:
         r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
@@ -125,7 +134,7 @@ def fetch_html_links(name: str, url: str, base: str, limit=120):
             if not title or len(title) < 6:
                 continue
 
-            # 统一成绝对链接
+            # 转绝对链接
             if href.startswith("//"):
                 href = "https:" + href
             elif href.startswith("/"):
@@ -154,7 +163,6 @@ def post_to_serverchan(title: str, md: str):
     r = requests.post(api, data={"title": title, "desp": md}, timeout=25)
     r.raise_for_status()
 
-
 # ======================
 # 主逻辑
 # ======================
@@ -163,55 +171,55 @@ def main():
     today = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
 
     try:
-        diag_cn, diag_os = [], []
+        # 1) 抓取（中国）
+        diag_cn = []
         pool_cn = []
 
-        # 1) 中国 RSS 抓取
         for url in CHINA_RSS_FEEDS:
-            items, st = fetch_rss(url, limit=60)
+            items, st = fetch_rss(url, limit=100)
             diag_cn.append(f"- {url} -> {st}")
             for it in items:
                 it["_src"] = url
             pool_cn.extend(items)
 
-        # 2) 中国 HTML 抓取（投融资专栏/投融资资讯）
         for src in CHINA_HTML_SOURCES:
-            links, st = fetch_html_links(src["name"], src["url"], src["base"], limit=160)
+            links, st = fetch_html_links(src["name"], src["url"], src["base"], limit=260)
             diag_cn.append(f"- {src['name']} HTML -> {st} ({src['url']})")
             for it in links:
                 it["summary"] = it.get("summary", "")
                 it["_src"] = src["name"]
             pool_cn.extend(links)
 
-        # 3) 过滤：融资事件 & 基金动态
+        # 2) 过滤：融资候选 & 基金动态
         deals, funds = [], []
         for it in pool_cn:
             title = it.get("title", "")
             blob = f"{title} {it.get('summary','')}"
-            if is_true_deal_B(title):
+            if is_true_deal_vc(title):
                 deals.append({
                     "title": title,
                     "link": it.get("link", ""),
                     "sector": detect_sector(blob),
-                    "amount": extract_amount(blob),
+                    "amount_hint": extract_amount(blob),
                     "src": it.get("_src", ""),
                 })
             elif is_fund_news(title):
                 funds.append({
                     "title": title,
                     "link": it.get("link", ""),
-                    "amount": extract_amount(blob),
+                    "amount_hint": extract_amount(blob),
                     "src": it.get("_src", ""),
                 })
 
-        # 去重 + 控制数量
-        deals = list({d["title"]: d for d in deals}.values())[:20]  # 你要 20 条左右
+        # 去重 + 控制数量（你要 20 条左右）
+        deals = list({d["title"]: d for d in deals}.values())[:20]
         funds = list({f["title"]: f for f in funds}.values())[:10]
 
-        # 4) 海外对比
+        # 3) 海外对比
+        diag_os = []
         pool_os = []
         for url in OVERSEAS_FEEDS:
-            items, st = fetch_rss(url, limit=30)
+            items, st = fetch_rss(url, limit=40)
             diag_os.append(f"- {url} -> {st}")
             pool_os.extend(items)
 
@@ -222,9 +230,13 @@ def main():
                 overseas.append({"title": it["title"], "link": it["link"]})
         overseas = list({o["title"]: o for o in overseas}.values())[:5]
 
+        # 4) 融资规模统计（粗略：仅统计“可提取到金额线索”的条数）
+        disclosed = sum(1 for d in deals if d["amount_hint"] != "未披露")
+        undisclosed = len(deals) - disclosed
+
         # 5) 输出
         md = []
-        md.append(f"# {today} 股权投融资 Daily Briefing（B策略：标题含“融资”即入池）\n")
+        md.append(f"# {today} 股权投融资 Daily Briefing（B模式：VC实战）\n")
 
         md.append("## ✅ 抓取诊断（中国源）")
         md.extend(diag_cn)
@@ -234,15 +246,19 @@ def main():
         if deals:
             for i, d in enumerate(deals, 1):
                 md.append(f"{i}. **[{d['title']}]({d['link']})**")
-                md.append(f"   - 赛道：{d['sector']}｜金额：{d['amount']}｜来源：{d['src']}")
+                md.append(f"   - 赛道：{d['sector']}｜金额线索：{d['amount_hint']}｜来源：{d['src']}")
         else:
-            md.append("- 今日未抓到标题含“融资”的条目（或均被噪音规则排除）。")
+            md.append("- 今日未抓到融资候选条目（若出现，请把“标题样本”发我，我继续补动作词或降噪）。")
+
+        md.append("\n## 📊 融资规模统计汇总（粗略）")
+        md.append(f"- 今日融资候选：**{len(deals)}** 条")
+        md.append(f"- 金额线索：**{disclosed}** 条｜未披露：**{undisclosed}** 条")
 
         md.append("\n## 🏦 VC/PE 基金动态（≤10）")
         if funds:
             for i, f in enumerate(funds, 1):
                 md.append(f"{i}. **[{f['title']}]({f['link']})**")
-                md.append(f"   - 规模线索：{f['amount']}｜来源：{f['src']}")
+                md.append(f"   - 规模线索：{f['amount_hint']}｜来源：{f['src']}")
         else:
             md.append("- 今日未抓到明确募资/设立/备案类标题。")
 
@@ -254,8 +270,9 @@ def main():
             for o in overseas:
                 md.append(f"- **[{o['title']}]({o['link']})**")
         else:
-            md.append("- 今日未抓到海外融资条目（或当天 funding 文章较少）。")
+            md.append("- 今日未抓到海外融资条目。")
 
+        # 先不强行写“热点趋势点评/明日关注清单”，等你跑出稳定中国数据后再加会更准
         post_to_serverchan(f"{today} 股权投融资晨报", "\n".join(md))
 
     except Exception as ex:
