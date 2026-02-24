@@ -3,51 +3,43 @@ import re
 import datetime
 import requests
 import feedparser
+from bs4 import BeautifulSoup
 
 # ======================
-# 直连 RSS/Atom 源（不走 RSSHub，避免 403）
+# 配置区
 # ======================
 
-CHINA_FEEDS = [
-    # 36氪（全站 RSS，内容较泛，但能作为底池）
-    "https://36kr.com/feed",
-
-    # 创业邦（官方 RSS：内容不全但可用）
-    "https://www.cyzone.cn/rss",
-
-    # 猎云网（更推荐这两个：社区长期使用的直连 RSS）
-    "http://www.lieyunwang.com/feed",             # :contentReference[oaicite:1]{index=1}
-    "http://www.lieyunwang.com/newrss/feed.xml",  # :contentReference[oaicite:2]{index=2}
-
-    # 钛媒体（偏产业/科技，也会出现融资报道）
-    "http://www.tmtpost.com/rss.xml",             # :contentReference[oaicite:3]{index=3}
-
-    # 动点科技（中国科技/融资也比较多）
-    "https://cn.technode.com/feed/",              # :contentReference[oaicite:4]{index=4}
-]
-
+# 海外 RSS（你之前已验证 OK）
 OVERSEAS_FEEDS = [
     "https://techcrunch.com/tag/funding/feed/",
     "https://www.fiercebiotech.com/rss/xml",
 ]
 
-# ======================
-# B策略：宁可少，也要“标题级真融资”
-# ======================
+# 中国 RSS：你图里验证 OK 的
+CHINA_RSS_FEEDS = [
+    "https://36kr.com/feed",          # OK(30)
+    "http://www.tmtpost.com/rss.xml", # OK(20)
+    "https://cn.technode.com/feed/",  # OK(10)
+]
 
-# 标题必须命中：融资词 + 轮次/金额/投资方信号（至少其一）
-DEAL_CORE = ["融资", "获融资", "完成融资", "追加融资", "战略融资"]
-ROUND_WORDS = ["天使轮", "种子轮", "Pre-A", "PreA", "A轮", "A+轮", "B轮", "C轮", "D轮", "E轮"]
-INVESTOR_WORDS = ["领投", "跟投", "投资", "加持"]
-AMOUNT_WORDS = ["亿", "万", "美元", "美金", "人民币", "RMB", "USD"]
+# 中国 HTML：用于“投融资专栏/行业投融资讯”抓取（不走 RSSHub）
+CHINA_HTML_SOURCES = [
+    # 36kr 投融资频道
+    {"name": "36kr-投融资", "url": "https://36kr.com/investment", "base": "https://36kr.com"},
+    # 投资界（PEdaily）- 资讯首页（含大量投融资/募资标题）
+    {"name": "投资界-资讯", "url": "https://news.pedaily.cn/", "base": "https://news.pedaily.cn"},
+]
 
-# 排除噪音（出现就直接剔除）
-NOISE_WORDS = ["论坛", "峰会", "活动", "会议", "报告", "白皮书", "观点", "盘点", "预测", "招聘", "发布会", "开幕", "闭幕"]
+# B策略：标题含“融资”即算候选（但仍排噪音）
+NOISE_WORDS = [
+    "论坛", "峰会", "活动", "会议", "报告", "白皮书", "观点", "盘点", "预测", "招聘", "发布会", "圆桌", "直播",
+    "训练营", "课程", "研讨会"
+]
 
-# 基金动态（标题级）
-FUND_WORDS = ["募资", "募集", "首关", "终关", "设立", "成立", "备案", "基金", "GP", "LP"]
+# 基金/募资强信号（标题级）
+FUND_WORDS = ["募资", "募集", "首关", "终关", "设立", "成立", "备案", "基金", "GP", "LP", "FOF"]
 
-# 你关注的赛道（用于分组 + 非赛道剔除）
+# 你关注赛道（用于分组；不命中=仍可收录，但放“其他/待归类”）
 SECTOR_RULES = {
     "AI": ["AI", "人工智能", "大模型", "LLM", "AIGC", "多模态", "算力", "机器人", "具身", "自动驾驶"],
     "医疗/生物": ["医疗", "医药", "生物", "器械", "IVD", "基因", "细胞", "抗体", "肿瘤", "诊断", "制药"],
@@ -57,6 +49,11 @@ SECTOR_RULES = {
 }
 
 AMOUNT_RE = re.compile(r"((?:超|近|约)?\s*\d+(?:\.\d+)?\s*(?:亿|万)?\s*(?:人民币|元|美元|美金|US\$|USD|RMB)?)", re.I)
+
+
+# ======================
+# 工具函数
+# ======================
 
 def clean(s: str) -> str:
     s = re.sub(r"<[^>]+>", "", s or "")
@@ -71,22 +68,38 @@ def detect_sector(text: str) -> str:
     for sector, keys in SECTOR_RULES.items():
         if has_any(text, keys):
             return sector
-    return "其他"
+    return "其他/待归类"
 
 def extract_amount(text: str) -> str:
     m = AMOUNT_RE.search((text or "").replace(",", ""))
     return m.group(1).strip() if m else "未披露"
 
-def parse_feed(url: str, limit=50):
-    """
-    返回: items(list), status(str)
-    """
+def is_noise(title: str) -> bool:
+    return has_any(title, NOISE_WORDS)
+
+def is_true_deal_B(title: str) -> bool:
+    """B策略：标题包含“融资”就收（但排除噪音）"""
+    if not title:
+        return False
+    if is_noise(title):
+        return False
+    return "融资" in title
+
+def is_fund_news(title: str) -> bool:
+    if not title:
+        return False
+    if is_noise(title):
+        return False
+    return has_any(title, FUND_WORDS)
+
+def fetch_rss(url: str, limit=50):
+    """RSS 直连抓取：返回 (items, status)"""
     try:
         r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
-        feed = feedparser.parse(r.content)
+        d = feedparser.parse(r.content)
         items = []
-        for e in feed.entries[:limit]:
+        for e in d.entries[:limit]:
             items.append({
                 "title": clean(getattr(e, "title", "")),
                 "link": getattr(e, "link", ""),
@@ -96,134 +109,160 @@ def parse_feed(url: str, limit=50):
     except Exception as ex:
         return [], f"FAIL({type(ex).__name__}) {ex}"
 
-def is_true_deal(title: str) -> bool:
-    if not title:
-        return False
-    if has_any(title, NOISE_WORDS):
-        return False
+def fetch_html_links(name: str, url: str, base: str, limit=120):
+    """HTML 抓取公开页面的文章链接：返回 (links, status)
+       links: list[dict(title, link)]
+    """
+    try:
+        r = requests.get(url, timeout=25, headers={"User-Agent": "Mozilla/5.0"})
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
 
-    # 必须有“融资”核心词
-    if not has_any(title, DEAL_CORE) and "融资" not in title:
-        return False
+        out = []
+        for a in soup.find_all("a"):
+            title = clean(a.get_text() or "")
+            href = a.get("href") or ""
+            if not title or len(title) < 6:
+                continue
 
-    # 再要求至少命中：轮次 / 金额信号 / 投资方信号（防止“融资观点/融资课”）
-    if has_any(title, ROUND_WORDS) or has_any(title, AMOUNT_WORDS) or has_any(title, INVESTOR_WORDS):
-        return True
+            # 统一成绝对链接
+            if href.startswith("//"):
+                href = "https:" + href
+            elif href.startswith("/"):
+                href = base.rstrip("/") + href
+            elif not href.startswith("http"):
+                continue
 
-    return False
+            out.append({"title": title, "link": href})
 
-def is_fund_news(title: str) -> bool:
-    if not title:
-        return False
-    if has_any(title, NOISE_WORDS):
-        return False
-    return has_any(title, FUND_WORDS)
+        # 去重
+        seen = set()
+        uniq = []
+        for it in out:
+            k = (it["title"], it["link"])
+            if k not in seen:
+                seen.add(k)
+                uniq.append(it)
 
-def post_to_serverchan(title: str, desp_md: str):
+        return uniq[:limit], f"OK({len(uniq[:limit])})"
+    except Exception as ex:
+        return [], f"FAIL({type(ex).__name__}) {ex}"
+
+def post_to_serverchan(title: str, md: str):
     sendkey = os.environ["SENDKEY"]
     api = f"https://sctapi.ftqq.com/{sendkey}.send"
-    r = requests.post(api, data={"title": title, "desp": desp_md}, timeout=20)
+    r = requests.post(api, data={"title": title, "desp": md}, timeout=25)
     r.raise_for_status()
+
+
+# ======================
+# 主逻辑
+# ======================
 
 def main():
     today = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
 
     try:
-        # 1) 抓取 + 诊断
-        diag = []
-        all_items = []
-        for url in CHINA_FEEDS:
-            items, st = parse_feed(url)
-            diag.append(f"- {url} -> {st}")
+        diag_cn, diag_os = [], []
+        pool_cn = []
+
+        # 1) 中国 RSS 抓取
+        for url in CHINA_RSS_FEEDS:
+            items, st = fetch_rss(url, limit=60)
+            diag_cn.append(f"- {url} -> {st}")
             for it in items:
                 it["_src"] = url
-            all_items.extend(items)
+            pool_cn.extend(items)
 
-        # 2) 过滤真融资 + 真基金
+        # 2) 中国 HTML 抓取（投融资专栏/投融资资讯）
+        for src in CHINA_HTML_SOURCES:
+            links, st = fetch_html_links(src["name"], src["url"], src["base"], limit=160)
+            diag_cn.append(f"- {src['name']} HTML -> {st} ({src['url']})")
+            for it in links:
+                it["summary"] = it.get("summary", "")
+                it["_src"] = src["name"]
+            pool_cn.extend(links)
+
+        # 3) 过滤：融资事件 & 基金动态
         deals, funds = [], []
-        for it in all_items:
-            title = it["title"]
-            blob = f"{title} {it['summary']}"
-
-            if is_true_deal(title):
-                sector = detect_sector(blob)
-                if sector != "其他":
-                    deals.append({
-                        "title": title,
-                        "link": it["link"],
-                        "sector": sector,
-                        "amount": extract_amount(blob),
-                        "src": it.get("_src", ""),
-                    })
+        for it in pool_cn:
+            title = it.get("title", "")
+            blob = f"{title} {it.get('summary','')}"
+            if is_true_deal_B(title):
+                deals.append({
+                    "title": title,
+                    "link": it.get("link", ""),
+                    "sector": detect_sector(blob),
+                    "amount": extract_amount(blob),
+                    "src": it.get("_src", ""),
+                })
             elif is_fund_news(title):
                 funds.append({
                     "title": title,
-                    "link": it["link"],
+                    "link": it.get("link", ""),
                     "amount": extract_amount(blob),
                     "src": it.get("_src", ""),
                 })
 
-        # 去重 + 控制数量（B策略：宁可少）
-        deals = list({d["title"]: d for d in deals}.values())[:15]
+        # 去重 + 控制数量
+        deals = list({d["title"]: d for d in deals}.values())[:20]  # 你要 20 条左右
         funds = list({f["title"]: f for f in funds}.values())[:10]
 
-        # 3) 海外对比（恢复）
-        overseas_pool = []
-        odiag = []
+        # 4) 海外对比
+        pool_os = []
         for url in OVERSEAS_FEEDS:
-            items, st = parse_feed(url, limit=25)
-            odiag.append(f"- {url} -> {st}")
-            overseas_pool.extend(items)
+            items, st = fetch_rss(url, limit=30)
+            diag_os.append(f"- {url} -> {st}")
+            pool_os.extend(items)
 
         overseas = []
-        for it in overseas_pool:
-            blob = (it["title"] + " " + it["summary"]).lower()
+        for it in pool_os:
+            blob = (it["title"] + " " + it.get("summary", "")).lower()
             if any(k in blob for k in ["funding", "financing", "raised", "series", "seed", "round"]):
-                overseas.append(it)
+                overseas.append({"title": it["title"], "link": it["link"]})
         overseas = list({o["title"]: o for o in overseas}.values())[:5]
 
-        # 4) 输出
+        # 5) 输出
         md = []
-        md.append(f"# {today} VC/PE 融资晨报（B策略：宁可少也要真）\n")
+        md.append(f"# {today} 股权投融资 Daily Briefing（B策略：标题含“融资”即入池）\n")
 
         md.append("## ✅ 抓取诊断（中国源）")
-        md.extend(diag)
+        md.extend(diag_cn)
         md.append("")
 
-        md.append("## 🇨🇳 中国真融资（≤15）")
+        md.append("## 🇨🇳 中国融资动态（≤20）")
         if deals:
             for i, d in enumerate(deals, 1):
                 md.append(f"{i}. **[{d['title']}]({d['link']})**")
-                md.append(f"   - 赛道：{d['sector']}｜金额：{d['amount']}")
+                md.append(f"   - 赛道：{d['sector']}｜金额：{d['amount']}｜来源：{d['src']}")
         else:
-            md.append("- 今日未筛到“标题级真融资”条目。")
-            md.append("- 原始标题样本（前10条，用于判断是否需要再加源/再调规则）：")
-            for i, it in enumerate(all_items[:10], 1):
-                md.append(f"  {i}) {it['title']}")
+            md.append("- 今日未抓到标题含“融资”的条目（或均被噪音规则排除）。")
 
-        md.append("\n## 🏦 基金/募资动态（≤10）")
+        md.append("\n## 🏦 VC/PE 基金动态（≤10）")
         if funds:
             for i, f in enumerate(funds, 1):
                 md.append(f"{i}. **[{f['title']}]({f['link']})**")
-                md.append(f"   - 规模线索：{f['amount']}")
+                md.append(f"   - 规模线索：{f['amount']}｜来源：{f['src']}")
         else:
-            md.append("- 今日未筛到明确募资/设立/备案类标题。")
+            md.append("- 今日未抓到明确募资/设立/备案类标题。")
 
         md.append("\n## 🌍 海外对比（≤5）")
         md.append("### 抓取诊断（海外源）")
-        md.extend(odiag)
+        md.extend(diag_os)
         if overseas:
             md.append("")
             for o in overseas:
                 md.append(f"- **[{o['title']}]({o['link']})**")
         else:
-            md.append("- 今日未抓到海外融资条目（可能是源当天没有 funding 文章，或抓取失败）。")
+            md.append("- 今日未抓到海外融资条目（或当天 funding 文章较少）。")
 
-        post_to_serverchan(f"{today} VC/PE 晨报", "\n".join(md))
+        post_to_serverchan(f"{today} 股权投融资晨报", "\n".join(md))
 
     except Exception as ex:
-        err_md = f"# {today} 晨报生成失败（已捕获）\n\n- 错误类型：{type(ex).__name__}\n- 错误信息：{ex}\n\n请到 GitHub Actions 日志查看详细报错。"
-        post_to_serverchan(f"{today} 晨报失败告警", err_md)
+        post_to_serverchan(
+            f"{today} 晨报失败告警",
+            f"# {today} 晨报生成失败（已捕获）\n\n- 错误类型：{type(ex).__name__}\n- 错误信息：{ex}\n"
+        )
 
 if __name__ == "__main__":
     main()
