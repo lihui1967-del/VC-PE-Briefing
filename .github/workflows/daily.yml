@@ -1,0 +1,22 @@
+name: Daily VC Briefing
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # UTC 00:00 = 北京/台北 08:00
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install feedparser requests
+      - name: Run
+        env:
+          SENDKEY: ${{ secrets.SENDKEY }}
+        run: python main.py
