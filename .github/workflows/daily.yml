@@ -14,7 +14,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install deps
+- name: Install deps
+  run: pip install feedparser requests
         run: pip install feedparser requests
       - name: Run
         env:
