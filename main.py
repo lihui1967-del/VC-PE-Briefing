@@ -5,9 +5,24 @@ import feedparser
 # ========== 数据源（先保守，后续可继续加）==========
 # 这些源偏“新闻快讯/周报”，但我们用“强过滤”只留下真融资标题
 CHINA_FEEDS = [
-    "https://rsshub.app/36kr/newsflashes",
-    "https://rsshub.app/cyzone/label/%E6%8A%95%E8%9E%8D%E8%B5%84%E5%91%A8%E6%8A%A5",
-    "https://rsshub.app/cyzone/label/%E5%85%A8%E7%90%83%E6%8A%95%E8%9E%8D%E8%B5%84%E5%91%A8%E6%8A%A5",
+    CHINA_FEEDS = [
+
+    # 36氪 投融资专栏
+    "https://rsshub.app/36kr/investment",
+
+    # 创业邦 投融资
+    "https://rsshub.app/cyzone/label/投融资",
+
+    # 投资界 投融资事件
+    "https://rsshub.app/pedaily/weeklyinvest",
+
+    # 猎云网 融资
+    "https://rsshub.app/lieyunwang/news/融资",
+
+    # 亿欧 投融资
+    "https://rsshub.app/iyiou/invest",
+
+]
 ]
 
 OVERSEAS_FEEDS = [
