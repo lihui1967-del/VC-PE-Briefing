@@ -58,9 +58,11 @@ OVERSEAS_FEEDS = [
 ]
 
 CHINA_RSS_FEEDS = [
-    ("36氪", "https://36kr.com/feed"),
     ("钛媒体", "https://www.tmtpost.com/rss.xml"),
-    ("动点科技", "https://cn.technode.com/feed/"),
+    # 36氪官方 feed 已失效（解析到 0 条），改走 RSSHub 快讯路由。
+    # 注意：rsshub.app 是公共实例，可能限流；若长期不稳，考虑自建。
+    ("36氪快讯", "https://rsshub.app/36kr/newsflashes"),
+    # 动点科技已移除：403 Forbidden，反爬拦截
 ]
 
 # HTML 抓取源。article_re 用来把导航栏/页脚/推荐位的链接挡在外面，
@@ -271,6 +273,14 @@ def fetch_rss(name: str, url: str, limit: int = 100) -> List[Dict]:
                 "src": name,
             })
 
+        if not items:
+            SRC_STATUS.append({
+                "name": name, "ok": False, "n": 0,
+                "err": f"{len(d.entries)} 条全在 {MAX_AGE_HOURS}h 窗口外",
+            })
+            log(f"⚠ {name}: {len(d.entries)} 条全部超出时间窗")
+            return []
+
         SRC_STATUS.append({"name": name, "ok": True, "n": len(items), "err": ""})
         log(f"✓ {name}: {len(items)} 条在窗口内（过滤掉 {stale} 条过期）")
         return items
@@ -286,7 +296,11 @@ def fetch_html_links(src: Dict, limit: int = 200) -> List[Dict]:
     try:
         r = requests.get(src["url"], timeout=REQ_TIMEOUT, headers={"User-Agent": UA})
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+        # 关键：必须传 r.content 而不是 r.text。
+        # 响应头没声明 charset 时 requests 会回退到 ISO-8859-1，中文全成乱码，
+        # 于是所有中文关键词规则失效、中国融资动态恒为 0。
+        # 传字节流则由 BeautifulSoup 自己读 <meta charset> 判断编码。
+        soup = BeautifulSoup(r.content, "html.parser")
 
         art_re = src.get("article_re")
         date_group = src.get("date_group")
@@ -325,8 +339,12 @@ def fetch_html_links(src: Dict, limit: int = 200) -> List[Dict]:
             if len(out) >= limit:
                 break
 
-        SRC_STATUS.append({"name": name, "ok": True, "n": len(out), "err": ""})
-        log(f"✓ {name}: {len(out)} 条文章链接")
+        ok = len(out) > 0
+        SRC_STATUS.append({
+            "name": name, "ok": ok, "n": len(out),
+            "err": "" if ok else "0 条命中 article_re，正则可能过期",
+        })
+        log(f"{'✓' if ok else '✗'} {name}: {len(out)} 条文章链接")
         return out
 
     except Exception as ex:
