@@ -59,22 +59,29 @@ OVERSEAS_FEEDS = [
 
 CHINA_RSS_FEEDS = [
     ("钛媒体", "https://www.tmtpost.com/rss.xml"),
-    # 36氪官方 feed 已失效（解析到 0 条），改走 RSSHub 快讯路由。
-    # 注意：rsshub.app 是公共实例，可能限流；若长期不稳，考虑自建。
-    ("36氪快讯", "https://rsshub.app/36kr/newsflashes"),
-    # 动点科技已移除：403 Forbidden，反爬拦截
+    # 36氪快讯已停用：rsshub.app 公共实例对 CI 机房 IP 稳定返回 403。
+    # 若要恢复 36氪，需自建 RSSHub 实例。
+    # ("36氪快讯", "https://rsshub.app/36kr/newsflashes"),
 ]
 
 # HTML 抓取源。article_re 用来把导航栏/页脚/推荐位的链接挡在外面，
-# 只保留真正的文章页 —— 这个正则务必按站点实际 URL 形态实测调整。
+# 只保留真正的文章页 —— 这个正则务必按站点实际 URL 形态实测调整
+# （跑 check_sources.py，它会归纳出各页面的真实 URL 形态）。
 CHINA_HTML_SOURCES = [
     {
-        "name": "投资界",
-        "url": "https://news.pedaily.cn/",
-        "base": "https://news.pedaily.cn",
-        # 形如 /202608/123456.shtml
+        # 投融资专栏，信噪比最高，是主力源
+        "name": "投资界-投融资",
+        "url": "https://vc.pedaily.cn/invest/",
+        "base": "https://vc.pedaily.cn",
         "article_re": re.compile(r"/(\d{6})/\d+\.shtml"),
-        # 第 1 个捕获组是 YYYYMM，用于时间过滤；没有就设 None
+        "date_group": 1,
+    },
+    {
+        # 全站资讯列表，覆盖面更广，用于补漏
+        "name": "投资界-全站",
+        "url": "https://www.pedaily.cn/all/",
+        "base": "https://www.pedaily.cn",
+        "article_re": re.compile(r"/(\d{6})/\d+\.shtml"),
         "date_group": 1,
     },
 ]
@@ -89,13 +96,17 @@ NOISE_WORDS = [
     "解读", "观察", "方法论", "招商", "评选", "颁奖",
     # GP 招标/遴选类公告，不是募资事件本身
     "遴选", "招标", "公开征集", "意向公告", "中标",
+    # 二级市场 / 财报 / 政策联播 —— 本简报只看一级市场
+    "财报", "季报", "年报", "股价", "市值", "涨停", "跌停",
+    "港股", "美股", "A股", "上市首日", "敲钟", "联播", "条例", "征求意见",
 ]
 
 # 轮次/交易语境词。命中其一即可认定是融资语境。
 ROUND_WORDS = [
     "天使轮", "种子轮", "Pre-A", "Pre-B", "PreA", "A轮", "B轮", "C轮", "D轮",
     "E轮", "F轮", "Pre-IPO", "战略融资", "战略投资", "轮融资", "融资", "增资",
-    "并购", "收购", "领投", "跟投", "估值",
+    "并购", "收购", "领投", "跟投",
+    # "估值" 已移除：二级市场估值分析文章（如「百度换了一张估值表」）会误入
 ]
 
 # 动作词。单独出现不足以判定，需要配合金额或轮次词。
