@@ -2,25 +2,62 @@ name: Daily VC Briefing
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "23 22 * * *"        # UTC 22:23 → 台北/北京 06:23，避开整点拥堵
   workflow_dispatch:
+
+permissions:
+  contents: write                 # 仅为回写状态文件
+
+concurrency:
+  group: daily-briefing
+  cancel-in-progress: false       # 手动触发时不打断定时跑
 
 jobs:
   run:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15           # 防止卡死空烧额度
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+          cache: pip
 
       - name: Install deps
-        run: pip install feedparser requests beautifulsoup4
+        run: pip install -r requirements.txt
 
       - name: Run
         env:
           SENDKEY: ${{ secrets.SENDKEY }}
         run: python main.py
+
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v5   # 版本号以 Marketplace 当前为准
+        with:
+          name: briefing-${{ github.run_id }}
+          path: |
+            out/
+            *.md
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist state
+        if: success()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A state/ out/
+          git diff --staged --quiet || git commit -m "chore: daily run $(date -u +%F)"
+          git push
+
+      - name: Notify on failure
+        if: failure()
+        env:
+          SENDKEY: ${{ secrets.SENDKEY }}
+        run: |
+          curl -s -X POST "https://sctapi.ftqq.com/${SENDKEY}.send" \
+            -d "title=Daily VC Briefing 挂了" \
+            -d "desp=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
