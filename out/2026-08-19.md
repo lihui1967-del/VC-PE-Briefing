@@ -1,23 +1,37 @@
 # 2026-08-19 股权投融资 Daily Briefing
 
-## 🇨🇳 中国融资动态（1）
-1. **[AI收入连续两个季度过半，百度换了一张估值表](https://www.tmtpost.com/8107731.html)**
-   - 赛道：硬科技｜金额：未披露｜来源：钛媒体
+## 🇨🇳 中国融资动态（7）
+1. **[瑞丰高材拟4~5亿控股觅拓新材，康鹏科技潜伏5年能否成最大赢家？|并购一线](https://www.tmtpost.com/8108685.html)**
+   - 赛道：其他/待归类｜金额：5亿｜来源：钛媒体
+2. **[北极雄芯完成新一轮融资，大模型推理方案进入量产加速期](https://news.pedaily.cn/202608/567858.shtml)**
+   - 赛道：AI｜金额：未披露｜来源：投资界-全站
+3. **[星轫技术完成Pre-A2轮融资，加速EMB全系列产品的量产落地](https://news.pedaily.cn/202608/567857.shtml)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投资界-全站
+4. **[融速科技完成近亿元A+轮融资，昆仑资本独家投资](https://news.pedaily.cn/202608/567856.shtml)**
+   - 赛道：其他/待归类｜金额：近亿元｜来源：投资界-全站
+5. **[齐安科技完成亿级C轮战略融资，鄂州临空产业发展基金独家投资](https://news.pedaily.cn/202608/567855.shtml)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投资界-全站
+6. **[「眸深智能」完成近5亿元Pre-A+轮融资，构建机器人原生智能底座](https://news.pedaily.cn/202608/567853.shtml)**
+   - 赛道：AI｜金额：近5亿元｜来源：投资界-全站
+7. **[首发| 耀鸿电子融资超2亿元，AI上游材料爆发](https://news.pedaily.cn/202608/567841.shtml)**
+   - 赛道：硬科技｜金额：超2亿元｜来源：投资界-全站
 
 ## 📊 统计
-- 融资条目：**1**（含金额 0｜未披露 1）
-- 基金动态：**0**｜海外：**2**
-- 信源健康：**4/5**
+- 融资条目：**7**（含金额 4｜未披露 3）
+- 基金动态：**2**｜海外：**0**
+- 信源健康：**3/4**
 
-## 🏦 VC/PE 基金动态（0）
-- 窗口内无募资/设立/备案类条目。
+## 🏦 VC/PE 基金动态（2）
+1. **[浙江社保科创基金出资了](https://news.pedaily.cn/202608/567859.shtml)**
+   - 规模线索：未披露｜来源：投资界-全站
+2. **[奥特曼瘫坐叫停「GPT-6」训练，太强触发最高安全警报](https://news.pedaily.cn/202608/567850.shtml)**
+   - 规模线索：未披露｜来源：投资界-全站
 
-## 🌍 海外对比（2）
-- **[Craif raises $33M to boost work on its urine test for cancer](https://www.fiercebiotech.com/medtech/craif-raises-33m-boost-work-its-urine-test-cancer)** — $33M｜FierceBiotech
-- **[BioMarin bulks up bone unit with $275M Alesta buyout to challenge AstraZeneca](https://www.fiercebiotech.com/biotech/biomarin-bulks-bone-unit-275m-alesta-buyout-challenge-astrazeneca)** — $275M｜FierceBiotech
+## 🌍 海外对比（0）
+- 窗口内无海外融资条目。
 
 ## ⚠️ 异常信源
-- 36氪快讯：HTTPError
+- TechCrunch Funding：20 条全在 36h 窗口外
 
 ---
-窗口：36h｜生成于 2026-08-19 06:43 (UTC+8)
+窗口：36h｜生成于 2026-08-19 15:31 (UTC+8)
