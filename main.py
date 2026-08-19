@@ -69,21 +69,17 @@ CHINA_RSS_FEEDS = [
 # （跑 check_sources.py，它会归纳出各页面的真实 URL 形态）。
 CHINA_HTML_SOURCES = [
     {
-        # 投融资专栏，信噪比最高，是主力源
-        "name": "投资界-投融资",
-        "url": "https://vc.pedaily.cn/invest/",
-        "base": "https://vc.pedaily.cn",
-        "article_re": re.compile(r"/(\d{6})/\d+\.shtml"),
-        "date_group": 1,
-    },
-    {
-        # 全站资讯列表，覆盖面更广，用于补漏
+        # 全站资讯列表。文章链接指向 news 域，形态 /YYYYMM/ID.shtml，实测稳定命中 19 条。
+        # 内容已覆盖融资事件 + 基金成立，是当前唯一有效的中文源。
         "name": "投资界-全站",
         "url": "https://www.pedaily.cn/all/",
         "base": "https://www.pedaily.cn",
         "article_re": re.compile(r"/(\d{6})/\d+\.shtml"),
         "date_group": 1,
     },
+    # 投融资专栏 vc.pedaily.cn/invest/ 已弃用：
+    # 文章形态是 /vc/N.html（URL 无年月，无法按日期过滤），且静态 HTML 里
+    # 每种形态仅出现 1 次，正文列表应为 JS 动态渲染，requests 抓不到。
 ]
 
 # ----------------------------------------------------------------------
