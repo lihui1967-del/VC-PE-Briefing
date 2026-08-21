@@ -69,17 +69,33 @@ CHINA_RSS_FEEDS = [
 # （跑 check_sources.py，它会归纳出各页面的真实 URL 形态）。
 CHINA_HTML_SOURCES = [
     {
-        # 全站资讯列表。文章链接指向 news 域，形态 /YYYYMM/ID.shtml，实测稳定命中 19 条。
-        # 内容已覆盖融资事件 + 基金成立，是当前唯一有效的中文源。
+        # 全站资讯列表。文章链接指向 news 域，形态 /YYYYMM/ID.shtml，实测稳定命中约 20 条。
         "name": "投资界-全站",
         "url": "https://www.pedaily.cn/all/",
         "base": "https://www.pedaily.cn",
         "article_re": re.compile(r"/(\d{6})/\d+\.shtml"),
         "date_group": 1,
     },
-    # 投融资专栏 vc.pedaily.cn/invest/ 已弃用：
-    # 文章形态是 /vc/N.html（URL 无年月，无法按日期过滤），且静态 HTML 里
-    # 每种形态仅出现 1 次，正文列表应为 JS 动态渲染，requests 抓不到。
+    {
+        # 形态 /news/114-20260821-392880.html —— 栏目号-日期-文章号，
+        # URL 里带完整日期，可做时间过滤（取 YYYYMM 段）。
+        "name": "投中网",
+        "url": "https://www.chinaventure.com.cn/",
+        "base": "https://www.chinaventure.com.cn",
+        "article_re": re.compile(r"/news/\d+-(\d{6})\d{2}-\d+\.html"),
+        "date_group": 1,
+    },
+    {
+        # 形态 /article/843919.html —— 纯自增 ID，URL 无日期，只能靠 seen.json 去重。
+        "name": "创业邦",
+        "url": "https://www.cyzone.cn/",
+        "base": "https://www.cyzone.cn",
+        "article_re": re.compile(r"/article/\d+\.html"),
+        "date_group": None,
+    },
+    # 投资界投融资专栏 vc.pedaily.cn/invest/ 已弃用：
+    # 文章形态是 /vc/N.html（URL 无年月），且静态 HTML 里每种形态仅出现 1 次，
+    # 正文列表应为 JS 动态渲染，requests 抓不到。
 ]
 
 # ----------------------------------------------------------------------
@@ -92,6 +108,9 @@ NOISE_WORDS = [
     "解读", "观察", "方法论", "招商", "评选", "颁奖",
     # GP 招标/遴选类公告，不是募资事件本身
     "遴选", "招标", "公开征集", "意向公告", "中标",
+    "招GP", "招募GP", "征集GP", "选聘", "比选", "管理机构",
+    # 政策文件、通知类
+    "实施意见", "印发", "管理办法", "暂行办法", "指导意见", "征求意见稿",
     # 二级市场 / 财报 / 政策联播 —— 本简报只看一级市场
     "财报", "季报", "年报", "股价", "市值", "涨停", "跌停",
     "港股", "美股", "A股", "上市首日", "敲钟", "联播", "条例", "征求意见",
