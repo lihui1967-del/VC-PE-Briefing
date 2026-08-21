@@ -53,7 +53,9 @@ STATE_PATH = pathlib.Path("state/seen.json")
 OUT_DIR = pathlib.Path("out")
 
 OVERSEAS_FEEDS = [
+    # 实测最新一条已 96h 前，疑似停更。暂留观察，若持续无更新可注释掉。
     ("TechCrunch Funding", "https://techcrunch.com/tag/funding/feed/"),
+    # 注意：此源条目无 published_parsed，时间窗过滤对它失效，仅靠 seen.json 去重。
     ("FierceBiotech", "https://www.fiercebiotech.com/rss/xml"),
 ]
 
@@ -77,21 +79,23 @@ CHINA_HTML_SOURCES = [
         "date_group": 1,
     },
     {
-        # 形态 /news/114-20260821-392880.html —— 栏目号-日期-文章号，
-        # URL 里带完整日期，可做时间过滤（取 YYYYMM 段）。
-        "name": "投中网",
-        "url": "https://www.chinaventure.com.cn/",
+        # 栏目页 /news/114.html，其文章形态即 /news/114-YYYYMMDD-ID.html，
+        # 栏目号与文章 URL 自洽。正则保留通用栏目号，以容纳页内少量跨栏目推荐。
+        "name": "投中网-创投",
+        "url": "https://www.chinaventure.com.cn/news/114.html",
         "base": "https://www.chinaventure.com.cn",
         "article_re": re.compile(r"/news/\d+-(\d{6})\d{2}-\d+\.html"),
         "date_group": 1,
     },
     {
-        # 形态 /article/843919.html —— 纯自增 ID，URL 无日期，只能靠 seen.json 去重。
-        "name": "创业邦",
-        "url": "https://www.cyzone.cn/",
+        # 频道页 /channel/14（融资频道）。文章形态 /article/ID.html，纯自增 ID、
+        # URL 无日期，只能靠 seen.json 去重 —— 故限制条数，避免首次运行灌入历史文章。
+        "name": "创业邦-融资",
+        "url": "https://www.cyzone.cn/channel/14",
         "base": "https://www.cyzone.cn",
         "article_re": re.compile(r"/article/\d+\.html"),
         "date_group": None,
+        "limit": 40,
     },
     # 投资界投融资专栏 vc.pedaily.cn/invest/ 已弃用：
     # 文章形态是 /vc/N.html（URL 无年月），且静态 HTML 里每种形态仅出现 1 次，
@@ -341,6 +345,7 @@ def fetch_rss(name: str, url: str, limit: int = 100) -> List[Dict]:
 
 def fetch_html_links(src: Dict, limit: int = 200) -> List[Dict]:
     name = src["name"]
+    limit = src.get("limit", limit)   # 源可自带上限，无日期过滤的源应调小
     try:
         r = requests.get(src["url"], timeout=REQ_TIMEOUT, headers={"User-Agent": UA})
         r.raise_for_status()
