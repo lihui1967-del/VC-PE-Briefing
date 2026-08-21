@@ -1,27 +1,77 @@
 # 2026-08-21 股权投融资 Daily Briefing
 
-## 🇨🇳 中国融资动态（2）
-1. **[甫山智能完成千万级Pre-A轮融资，加速 AI 数据洞察与网络治理创新](https://news.pedaily.cn/202608/567918.shtml)**
-   - 赛道：AI｜金额：未披露｜来源：投资界-全站
-2. **[中科第五纪连续完成A1、A2轮融资，融资总金额超10亿元](https://news.pedaily.cn/202608/567913.shtml)**
-   - 赛道：其他/待归类｜金额：超10亿元｜来源：投资界-全站
+## 🇨🇳 中国融资动态（19）
+1. **[10亿美金开局，今年这个赛道几乎都融到钱了](https://www.tmtpost.com/8111730.html)**
+   - 赛道：医疗/生物｜金额：10亿美金｜来源：钛媒体
+2. **[中科玻声完成A+轮融资 本轮融资由光子强链基金、常州龙城英才科创天使基金、广州三美创投、湖南三泽创投联合投资。 投中网 · 6小时前](https://www.chinaventure.com.cn/news/114-20260821-392880.html)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
+3. **[融速科技完成近亿元A+轮融资 由昆仑资本独家投资。 投中网 · 11小时前](https://www.chinaventure.com.cn/news/114-20260821-392868.html)**
+   - 赛道：其他/待归类｜金额：近亿元｜来源：投中网-创投
+4. **[眸深智能完成近5亿元Pre-A+轮融资 本轮由头部国资基金深报一本基金、东方证券、陕西省高新技术产业投资有限公司，产业投资人安宇基金、天盟投资、建元天华联合投资；以及老股东创合汇资本、徐汇资本、庚辛资本超额追投。 投中网 · 2天前](https://www.chinaventure.com.cn/news/114-20260819-392830.html)**
+   - 赛道：其他/待归类｜金额：近5亿元｜来源：投中网-创投
+5. **[常州鉴芯半导体完成天使轮融资 本轮融资由常州赫尔墨斯资本领投，武高新政府产业基金武智汇创跟投。 投中网 · 2天前](https://www.chinaventure.com.cn/news/114-20260819-392829.html)**
+   - 赛道：硬科技｜金额：未披露｜来源：投中网-创投
+6. **[灵锶智能完成近亿元战略融资 本轮募集资金将重点用于三大方向：新一代机器人产品的迭代研发、智能化产线的扩产建设，以及国内外市场渠道的拓展。 投中网 · 3天前](https://www.chinaventure.com.cn/news/114-20260818-392810.html)**
+   - 赛道：AI｜金额：近亿元｜来源：投中网-创投
+7. **[硕橙科技获超亿元 D + 轮融资 本轮由工业母机产业投资基金独家投资。 投中网 · 3天前](https://www.chinaventure.com.cn/news/114-20260818-392803.html)**
+   - 赛道：硬科技｜金额：超亿元｜来源：投中网-创投
+8. **[富加镓业完成新一轮过亿元融资 本轮融资由国家级资本及市场化机构衢州东峰、上海科创、富阳产投、源创基金联合投资，老股东中网投及中科神光持续追加。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20260817-392789.html)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
+9. **[此芯科技完成数亿元融资 本轮融资由上海IC基金和浦东创投联合领投，联想创投等老股东持续加注，社会化资本跟投。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20260817-392792.html)**
+   - 赛道：其他/待归类｜金额：数亿元｜来源：投中网-创投
+10. **[向量奇点完成超亿元天使轮融资 本轮融资由IDG资本领投，五源资本、耀途资本、英诺天使基金、零以创投以及战略产业合作伙伴滴普科技共同参与。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20260817-392788.html)**
+   - 赛道：其他/待归类｜金额：超亿元｜来源：投中网-创投
+11. **[什方科技完成近3亿元融资 由同创伟业与五源资本、创世伙伴创投及头部产业战略投资机构恒旭资本、小米集团、蔚来资本联合投资，多家老股东同步追加投资。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20260817-392785.html)**
+   - 赛道：其他/待归类｜金额：近3亿元｜来源：投中网-创投
+12. **[网易孵化的芯片公司，B轮融了20亿 已与网易有道腾讯云等达成合作。 猎云精选 · 4天前](https://www.chinaventure.com.cn/news/114-20260817-392778.html)**
+   - 赛道：硬科技｜金额：20亿｜来源：投中网-创投
+13. **[谦合益邦完成超20亿元B轮融资 投资方囊括国家级基金国调基金、中国移动链长基金、山行资本、星连资本、石溪资本、金浦投资、南山资本、混沌投资、晨壹汇智、国策投资、国鑫创投、格致资本等多家一线知名机构。 投中网 · 2026-08-14](https://www.chinaventure.com.cn/news/114-20260814-392764.html)**
+   - 赛道：其他/待归类｜金额：超20亿元｜来源：投中网-创投
+14. **[独家｜90后“诺奖门徒”李相良，拿下超亿天使轮 “量子圈小登”，正面刚底层硬件。 投中网 · 2026-08-14](https://www.chinaventure.com.cn/news/114-20260814-392762.html)**
+   - 赛道：前沿科技｜金额：超亿｜来源：投中网-创投
+15. **[常州鉴芯半导体完成天使轮融资 2天前 1](https://www.chinaventure.com.cn/news/114-20260819-392829.html)**
+   - 赛道：硬科技｜金额：未披露｜来源：投中网-创投
+16. **[AI融资反超半导体360亿 2026-08-14 3](https://www.chinaventure.com.cn/news/80-20260814-392768.html)**
+   - 赛道：硬科技｜金额：360亿｜来源：投中网-创投
+17. **[一笔最新融资，揭开了智元的资本版图 3天前 6](https://www.chinaventure.com.cn/news/80-20260818-392794.html)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
+18. **[宇树融资故事：天使投资人回报1035倍 2天前 8](https://www.chinaventure.com.cn/news/80-20260819-392823.html)**
+   - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
+19. **[融资｜「MatriQ 原子矩阵」完成数亿元 A + 轮融资，构建从整机部署到云端算力的全链路生态](https://www.cyzone.cn/article/843728.html)**
+   - 赛道：AI｜金额：数亿元｜来源：创业邦-融资
 
 ## 📊 统计
-- 融资条目：**2**（含金额 1｜未披露 1）
-- 基金动态：**1**｜海外：**3**
-- 信源健康：**3/4**
+- 融资条目：**19**（含金额 13｜未披露 6）
+- 基金动态：**10**｜海外：**1**
+- 信源健康：**5/6**
 
-## 🏦 VC/PE 基金动态（1）
-1. **[欣旺达做LP，参设一支储能基金](https://news.pedaily.cn/202608/567912.shtml)**
+## 🏦 VC/PE 基金动态（10）
+1. **[汇聚资本动能 赋能产业未来 ——2026吉安市政府投资基金高质量发展对接推进会圆满举行](https://news.pedaily.cn/202608/567977.shtml)**
    - 规模线索：未披露｜来源：投资界-全站
+2. **[投资界LP周报 | 江苏浙江，正排队出资](https://news.pedaily.cn/202608/567970.shtml)**
+   - 规模线索：未披露｜来源：投资界-全站
+3. **[“最贵”的灵巧手公司，又做LP了 一次低成本撬动产业资源的安排。 投中网 · 3天前](https://www.chinaventure.com.cn/news/114-20260818-392811.html)**
+   - 规模线索：未披露｜来源：投中网-创投
+4. **[“最贵”的灵巧手公司，又做LP了 3天前 5](https://www.chinaventure.com.cn/news/114-20260818-392811.html)**
+   - 规模线索：未披露｜来源：投中网-创投
+5. **[LP周报丨“中药茅”片仔癀，下场做GP了 6天前 10](https://www.chinaventure.com.cn/news/80-20260815-392772.html)**
+   - 规模线索：未披露｜来源：投中网-创投
+6. **[2026吉安市政府投资基金高质量发展对接推进会圆满举行](https://www.cyzone.cn/article/843869.html)**
+   - 规模线索：未披露｜来源：创业邦-融资
+7. **[投资人，蹲守小红书募资](https://www.cyzone.cn/article/838315.html)**
+   - 规模线索：未披露｜来源：创业邦-融资
+8. **[北京亦庄四只产业投资基金集中成立总规模200亿元；思瑞浦拟作为LP出资5亿元参与设立苏州同信嘉远投资合伙企业丨06.22-06.28](https://www.cyzone.cn/article/838242.html)**
+   - 规模线索：200亿元｜来源：创业邦-融资
+9. **[上周最值得关注的基金重点事件](https://www.cyzone.cn/article/838242.html)**
+   - 规模线索：未披露｜来源：创业邦-融资
+10. **[目前，3C AGI首支基金海外项目的现金回报倍数已超过十倍。](https://www.cyzone.cn/article/836779.html)**
+   - 规模线索：未披露｜来源：创业邦-融资
 
-## 🌍 海外对比（3）
-- **[Chai tees up Bristol Myers Squibb AI antibody discovery collab](https://www.fiercebiotech.com/medtech/chai-tees-bristol-myers-squibb-ai-antibody-discovery-collab-deal)** — $400 million｜FierceBiotech
-- **[Merck-Moderna cancer vaccine win spurs stock jump, speculation of Keytruda-like impact](https://www.fiercebiotech.com/biotech/merck-moderna-cancer-vaccine-data-spur-speculation-keytruda-impact)** — $45 billion｜FierceBiotech
-- **[Amgen abandoning $500M+ Crohn’s collab won’t derail TScan’s pipeline strategy](https://www.fiercebiotech.com/biotech/amgen-abandons-500m-inflammation-team-tscan-therapeutics)** — $500M｜FierceBiotech
+## 🌍 海外对比（1）
+- **[Werewolf transforms into Ambros via reverse merger to support phase 3 push for rare disease drug](https://www.fiercebiotech.com/biotech/werewolf-transforming-reverse-merger-support-ambros-phase-3-push)** — $150 million｜FierceBiotech
 
 ## ⚠️ 异常信源
 - TechCrunch Funding：20 条全在 36h 窗口外
 
 ---
-窗口：36h｜生成于 2026-08-21 06:47 (UTC+8)
+窗口：36h｜生成于 2026-08-21 22:04 (UTC+8)
