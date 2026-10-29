@@ -1,68 +1,78 @@
-# 2026-10-28 股权投融资 Daily Briefing
+# 2026-10-29 股权投融资 Daily Briefing
 
 ## 🇨🇳 中国融资动态（20）
-1. **[【钛晨报】多项智能出行国际标准发布；Anthropic降价引爆调用量，知名投资人：1000亿美元级年终ARR再成可能；东山精密：最终发售价为每股86.8港元，国际发售获3.17倍认购](https://www.tmtpost.com/8183890.html)**
-   - 赛道：其他/待归类｜金额：1000亿美元｜来源：钛媒体
-2. **[首发| 维发电子完成亿元级C轮融资](https://news.pedaily.cn/202610/570934.shtml)**
-   - 赛道：其他/待归类｜金额：未披露｜来源：投资界-全站
-3. **[「朝好融」投融资路演厅未来产业专场 成功举办](https://news.pedaily.cn/202610/570931.shtml)**
-   - 赛道：其他/待归类｜金额：未披露｜来源：投资界-全站
-4. **[美图2026投资者日：Q3付费用户单季净增139万、主营收入增28.2%](https://news.pedaily.cn/202610/570929.shtml)**
-   - 赛道：其他/待归类｜金额：139万｜来源：投资界-全站
-5. **[量晶科技完成数亿元多轮融资 最新Pre-A轮融资由深创投领投、国新基金联合领投。 投中网 · 17小时前](https://www.chinaventure.com.cn/news/114-20261027-393778.html)**
+1. **[【钛晨报】北京“十五五”能源蓝图出炉：构建“1+3+6”体系；8000亿元新型政策性金融工具投放完成；字节辟谣“15万群演数据喂大模型”：传言严重失实](https://www.tmtpost.com/8185179.html)**
+   - 赛道：AI｜金额：8000亿元｜来源：钛媒体
+2. **[特种运输车企业「伏尔坎」完成数千万元融资](https://news.pedaily.cn/202610/571000.shtml)**
+   - 赛道：其他/待归类｜金额：数千万元｜来源：投资界-全站
+3. **[微纳核芯完成超10亿元C2轮融资，首创三维存算一体AI芯片新架构](https://news.pedaily.cn/202610/570997.shtml)**
+   - 赛道：硬科技｜金额：超10亿元｜来源：投资界-全站
+4. **[羚数智能连续完成A1、A2轮数千万融资 参与机构包括浦东创投、张江科投、锡创投。 投中网 · 16分钟前](https://www.chinaventure.com.cn/news/114-20261029-393807.html)**
+   - 赛道：其他/待归类｜金额：数千万｜来源：投中网-创投
+5. **[微纳核芯两个月内完成超20亿元融资 建投投资领投，杭州资本、凯泰资本、晓池资本、烟台财金、盛堃投资、国投泰康、领阳基金等多家专业机构共同投资。 投中网 · 19小时前](https://www.chinaventure.com.cn/news/114-20261028-393797.html)**
+   - 赛道：其他/待归类｜金额：超20亿元｜来源：投中网-创投
+6. **[量晶科技完成数亿元多轮融资 最新Pre-A轮融资由深创投领投、国新基金联合领投。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261027-393778.html)**
    - 赛道：其他/待归类｜金额：数亿元｜来源：投中网-创投
-6. **[手握10亿订单的机器人公司，要停摆了 4个月前，曾披露融资1.1亿。 猎云精选 · 18小时前](https://www.chinaventure.com.cn/news/114-20261027-393780.html)**
+7. **[手握10亿订单的机器人公司，要停摆了 4个月前，曾披露融资1.1亿。 猎云精选 · 1天前](https://www.chinaventure.com.cn/news/114-20261027-393780.html)**
    - 赛道：AI｜金额：10亿｜来源：投中网-创投
-7. **[诺亦腾机器人完成 Pre-A+++ 轮融资 本轮由汇融基金独家投资。 投中网 · 18小时前](https://www.chinaventure.com.cn/news/114-20261027-393785.html)**
+8. **[诺亦腾机器人完成 Pre-A+++ 轮融资 本轮由汇融基金独家投资。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261027-393785.html)**
    - 赛道：AI｜金额：未披露｜来源：投中网-创投
-8. **[模感科技完成亿元级天使+轮融资 本轮由鼎晖投资、绿洲资本联合领投，逐际动力、龙芯创投、中科创星、华山资本、浦东创投以及某国内头部具身厂商跟投。 投中网 · 18小时前](https://www.chinaventure.com.cn/news/114-20261027-393777.html)**
+9. **[模感科技完成亿元级天使+轮融资 本轮由鼎晖投资、绿洲资本联合领投，逐际动力、龙芯创投、中科创星、华山资本、浦东创投以及某国内头部具身厂商跟投。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261027-393777.html)**
    - 赛道：AI｜金额：未披露｜来源：投中网-创投
-9. **[瑞迪微电子完成亿元融资 高新控股（高新国控）再度增资1亿元。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261026-393763.html)**
+10. **[瑞迪微电子完成亿元融资 高新控股（高新国控）再度增资1亿元。 投中网 · 2天前](https://www.chinaventure.com.cn/news/114-20261026-393763.html)**
    - 赛道：其他/待归类｜金额：1亿元｜来源：投中网-创投
-10. **[维快光子完成新一轮数千万元融资 投资方包括国经资本、伟驰资本等。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261026-393761.html)**
+11. **[维快光子完成新一轮数千万元融资 投资方包括国经资本、伟驰资本等。 投中网 · 2天前](https://www.chinaventure.com.cn/news/114-20261026-393761.html)**
    - 赛道：其他/待归类｜金额：数千万元｜来源：投中网-创投
-11. **[瑞启深空完成超亿元天使+轮融资 本轮融资由东吴创新领投，苏创投、火炬电子、乾融资本、金雨茂物等机构跟投。 投中网 · 1天前](https://www.chinaventure.com.cn/news/114-20261026-393750.html)**
+12. **[瑞启深空完成超亿元天使+轮融资 本轮融资由东吴创新领投，苏创投、火炬电子、乾融资本、金雨茂物等机构跟投。 投中网 · 3天前](https://www.chinaventure.com.cn/news/114-20261026-393750.html)**
    - 赛道：其他/待归类｜金额：超亿元｜来源：投中网-创投
-12. **[辉羲智能相继完成Pre-B+及B轮融资 公司2026年内累计股权融资规模已超25亿元。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20261023-393731.html)**
+13. **[辉羲智能相继完成Pre-B+及B轮融资 公司2026年内累计股权融资规模已超25亿元。 投中网 · 5天前](https://www.chinaventure.com.cn/news/114-20261023-393731.html)**
    - 赛道：其他/待归类｜金额：超25亿元｜来源：投中网-创投
-13. **[九天睿芯半年完成10亿融资 美团战投、小鹏汽车（星航资本）、长存产业基金、元禾璞华、豪威集团等战略投资机构先后入局；近期，智微资本、米哈游战投加入，老股东英豪资本、韦豪创芯超额追加。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20261023-393726.html)**
+14. **[九天睿芯半年完成10亿融资 美团战投、小鹏汽车（星航资本）、长存产业基金、元禾璞华、豪威集团等战略投资机构先后入局；近期，智微资本、米哈游战投加入，老股东英豪资本、韦豪创芯超额追加。 投中网 · 6天前](https://www.chinaventure.com.cn/news/114-20261023-393726.html)**
    - 赛道：其他/待归类｜金额：10亿｜来源：投中网-创投
-14. **[观复芯完成种子轮融资 本轮融资由高瓴创投、力合算芯联合领投。 投中网 · 4天前](https://www.chinaventure.com.cn/news/114-20261023-393725.html)**
+15. **[观复芯完成种子轮融资 本轮融资由高瓴创投、力合算芯联合领投。 投中网 · 6天前](https://www.chinaventure.com.cn/news/114-20261023-393725.html)**
    - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
-15. **[立妙达完成 B1+B2 轮累计近5亿元融资 本轮融资汇集产业资本、头部金融机构、国资战略投资人，同时获得老股东继续追投。 投中网 · 5天前](https://www.chinaventure.com.cn/news/114-20261022-393722.html)**
+16. **[立妙达完成 B1+B2 轮累计近5亿元融资 本轮融资汇集产业资本、头部金融机构、国资战略投资人，同时获得老股东继续追投。 投中网 · 6天前](https://www.chinaventure.com.cn/news/114-20261022-393722.html)**
    - 赛道：其他/待归类｜金额：近5亿元｜来源：投中网-创投
-16. **[紫创智械获数千万元天使+轮融资 西部资本加码工程机械领域具身智能。 投中网 · 6天前](https://www.chinaventure.com.cn/news/114-20261021-393700.html)**
+17. **[紫创智械获数千万元天使+轮融资 西部资本加码工程机械领域具身智能。 投中网 · 2026-10-21](https://www.chinaventure.com.cn/news/114-20261021-393700.html)**
    - 赛道：AI｜金额：数千万元｜来源：投中网-创投
-17. **[智束科技完成超2亿元融资 本轮融资由中金资本旗下基金及浙江产投联合领投。 投中网 · 6天前](https://www.chinaventure.com.cn/news/114-20261021-393698.html)**
+18. **[智束科技完成超2亿元融资 本轮融资由中金资本旗下基金及浙江产投联合领投。 投中网 · 2026-10-21](https://www.chinaventure.com.cn/news/114-20261021-393698.html)**
    - 赛道：其他/待归类｜金额：超2亿元｜来源：投中网-创投
-18. **[伊塔动力完成超亿元种子和种子+轮融资 由经纬创投、商汤国香资本、建银国际、 L2F 光源创业者基金、银河通用、傅利叶智能联合投资，光源资本担任孵化方和独家财务顾问。 投中网 · 2026-10-20](https://www.chinaventure.com.cn/news/114-20261020-393690.html)**
+19. **[乙太科技完成超亿元融资 6天前 1](https://www.chinaventure.com.cn/news/113-20261022-393712.html)**
    - 赛道：其他/待归类｜金额：超亿元｜来源：投中网-创投
-19. **[乙太科技完成超亿元融资 5天前 1](https://www.chinaventure.com.cn/news/113-20261022-393712.html)**
-   - 赛道：其他/待归类｜金额：超亿元｜来源：投中网-创投
-20. **[紫明低温完成新一轮融资 6天前 2](https://www.chinaventure.com.cn/news/80-20261021-393710.html)**
-   - 赛道：其他/待归类｜金额：未披露｜来源：投中网-创投
+20. **[Today累计完成超 2 亿美元融资 6天前 3](https://www.chinaventure.com.cn/news/113-20261022-393711.html)**
+   - 赛道：其他/待归类｜金额：超 2 亿美元｜来源：投中网-创投
 
 ## 📊 统计
-- 融资条目：**20**（含金额 14｜未披露 6）
-- 基金动态：**4**｜海外：**2**
+- 融资条目：**20**（含金额 17｜未披露 3）
+- 基金动态：**9**｜海外：**2**
 - 信源健康：**5/6**
 
-## 🏦 VC/PE 基金动态（4）
-1. **[静水湖创投盲池基金完成二关：一家早期VC的克制与节奏](https://www.tmtpost.com/8183791.html)**
+## 🏦 VC/PE 基金动态（9）
+1. **[基金市场概况与资产配置观点 （10.19—10.25）](https://www.tmtpost.com/8185393.html)**
    - 规模线索：未披露｜来源：钛媒体
-2. **[沐曦做LP：出资孚腾资本](https://news.pedaily.cn/202610/570939.shtml)**
+2. **[逸飞激光4亿“追光”：拟用2.24亿超募资金“买单”，标的增值率达532%｜并购一线](https://www.tmtpost.com/8185098.html)**
+   - 规模线索：4亿｜来源：钛媒体
+3. **[最赚钱大学基金：哈佛大学基金会一年浮盈110亿美元](https://news.pedaily.cn/202610/571005.shtml)**
+   - 规模线索：110亿美元｜来源：投资界-全站
+4. **[长春振兴产业发展创业投资引导基金拟出资](https://news.pedaily.cn/202610/571001.shtml)**
    - 规模线索：未披露｜来源：投资界-全站
-3. **[LP周报丨50亿，砸向“Token之都”乌兰察布 3天前 3](https://www.chinaventure.com.cn/news/80-20261024-393746.html)**
+5. **[5亿元，允新海河基金成立](https://news.pedaily.cn/202610/570999.shtml)**
+   - 规模线索：5亿元｜来源：投资界-全站
+6. **[20亿元四川振兴合创生物医药基金启动](https://news.pedaily.cn/202610/570998.shtml)**
+   - 规模线索：20亿元｜来源：投资界-全站
+7. **[LP周报丨50亿，砸向“Token之都”乌兰察布 4天前 2](https://www.chinaventure.com.cn/news/80-20261024-393746.html)**
    - 规模线索：50亿｜来源：投中网-创投
-4. **[国资LP退潮 6天前 7](https://www.chinaventure.com.cn/news/80-20261021-393709.html)**
+8. **[“成都，是我们相处最舒服的LP” 6天前 10](https://www.chinaventure.com.cn/news/83-20261022-393723.html)**
    - 规模线索：未披露｜来源：投中网-创投
+9. **[2026吉安市政府投资基金高质量发展对接推进会圆满举行](https://www.cyzone.cn/article/843869.html)**
+   - 规模线索：未披露｜来源：创业邦-融资
 
 ## 🌍 海外对比（2）
-- **[Parkinson’s-focused Aspen and bispecific biotech Bambusa both shoot for $134M IPOs](https://www.fiercebiotech.com/biotech/parkinsons-focused-aspen-and-bispecific-biotech-bambusa-both-shoot-134m-ipos)** — $134M｜FierceBiotech
-- **[Novartis CEO keeps faith in Avidity deal despite taking $1.9B hit from del-desiran fail](https://www.fiercebiotech.com/biotech/novartis-ceo-keeps-faith-avidity-deal-despite-19b-hit-del-desiran-fail)** — $1.9B｜FierceBiotech
+- **[Genmab's $8B Merus bet delivers as bispecific combo halves risk of death in phase 3](https://www.fiercebiotech.com/biotech/genmabs-head-and-neck-cancer-bispecific-cuts-risk-death-half-ph3)** — $8B｜FierceBiotech
+- **[Astellas makes $1.3B bet on Audax’s preclinical push to reverse decades of IL-12 woes](https://www.fiercebiotech.com/biotech/astellas-makes-13b-bet-audaxs-preclinical-push-reverse-decades-il-12-woes)** — $1.3B｜FierceBiotech
 
 ## ⚠️ 异常信源
 - TechCrunch Funding：20 条全在 36h 窗口外
 
 ---
-窗口：36h｜生成于 2026-10-28 09:25 (UTC+8)
+窗口：36h｜生成于 2026-10-29 09:50 (UTC+8)
